@@ -16,12 +16,12 @@ public class CategoryPageFragment extends Fragment {
     private static final String ARG_CATEGORY = "ARG_CATEGORY";
 
     private Context context;
-    private String category;
+    private Category category;
     private View rootView;
 
-    public static CategoryPageFragment newInstance(String category, Context context) {
+    public static CategoryPageFragment newInstance(Category category, Context context) {
         Bundle args = new Bundle();
-        args.putString(ARG_CATEGORY, category);
+        args.putSerializable(ARG_CATEGORY, category);
         CategoryPageFragment fragment = new CategoryPageFragment();
         fragment.setArguments(args);
         fragment.setContext(context);
@@ -35,7 +35,7 @@ public class CategoryPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        category = getArguments().getString(ARG_CATEGORY);
+        category = (Category) getArguments().getSerializable(ARG_CATEGORY);
     }
 
     @Override

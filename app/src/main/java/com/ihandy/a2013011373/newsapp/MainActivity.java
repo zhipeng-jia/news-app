@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                Map<String, String> categories = RequestManager.fetchCategories();
+                List<Category> categories = RequestManager.fetchCategories();
                 ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
                 viewPager.setAdapter(
                         new CategoryTabPagerAdapter(getSupportFragmentManager(),

@@ -6,16 +6,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class RequestManager {
     private static final String CATEGORY_REQUEST_URL = "http://assignment.crazz.cn/news/en/category";
     private static final String NEWS_REQUEST_URL = "http://assignment.crazz.cn/news/query";
 
-    public static Map<String, String> fetchCategories() {
+    public static List<Category> fetchCategories() {
         try {
             GetRequestThread requestThread = new GetRequestThread(
                     CATEGORY_REQUEST_URL + "?timestamp=" + System.currentTimeMillis());
@@ -25,13 +23,16 @@ public class RequestManager {
                 return null;
             }
             JSONObject response = new JSONObject(requestThread.getOutput());
-            Map<String, String> categories = new HashMap<>();
+            List<Category> categories = new ArrayList<>();
             JSONObject target = response.getJSONObject("data").getJSONObject("categories");
             Iterator iterator = target.keys();
             while (iterator.hasNext()) {
                 String key = (String) iterator.next();
                 String value = target.getString(key);
-                categories.put(key, value);
+                Category category = new Category();
+                category.setName(key);
+                category.setDisplayName(value);
+                categories.add(category);
             }
             return categories;
         } catch (Exception e) {
@@ -40,10 +41,10 @@ public class RequestManager {
         return null;
     }
 
-    public static List<News> fetchNews(String category, long maxNewsId) {
+    public static List<News> fetchNews(Category category, long maxNewsId) {
         try {
             String requestUrl = NEWS_REQUEST_URL + "?locale=en";
-            requestUrl += "&category=" + category;
+            requestUrl += "&category=" + category.getName();
             if (maxNewsId != -1) {
                 requestUrl += "&max_news_id=" + maxNewsId;
             }
@@ -61,7 +62,7 @@ public class RequestManager {
                 News news = new News();
                 news.setId(entry.getLong("news_id"));
                 news.setTitle(entry.getString("title"));
-                news.setCategory(entry.getString("category"));
+                news.setCategory(category);
                 news.setOrigin(entry.getString("origin"));
                 if (!entry.isNull("source")) {
                     news.setUrl(entry.getJSONObject("source").getString("url"));

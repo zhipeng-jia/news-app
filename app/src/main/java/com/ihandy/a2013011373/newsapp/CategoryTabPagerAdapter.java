@@ -7,23 +7,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class CategoryTabPagerAdapter extends FragmentPagerAdapter {
     private Context context;
-    private ArrayList<String> categories = new ArrayList<>();
-    private ArrayList<String> categoryTitles = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     public CategoryTabPagerAdapter(FragmentManager fm,
-                                   Context context, Map<String, String> remoteCategories) {
+                                   Context context, List<Category> remoteCategories) {
         super(fm);
         this.context = context;
         if (remoteCategories != null) {
-            categories.addAll(remoteCategories.keySet());
-            Collections.sort(categories);
-            for (String category : categories) {
-                categoryTitles.add(remoteCategories.get(category));
-            }
+            categories = remoteCategories;
         }
     }
 
@@ -44,7 +40,7 @@ public class CategoryTabPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (0 <= position && position < categories.size()) {
-            return categoryTitles.get(position);
+            return categories.get(position).getDisplayName();
         } else {
             return null;
         }
