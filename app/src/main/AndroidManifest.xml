@@ -27,6 +27,9 @@
 
         <activity android:name=".ViewNewsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ViewFavoritesActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/favorites_title"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

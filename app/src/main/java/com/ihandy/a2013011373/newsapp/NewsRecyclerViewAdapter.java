@@ -45,7 +45,7 @@ public class NewsRecyclerViewAdapter
                         builder.show();
                         return;
                     }
-                    Intent intent= new Intent();
+                    Intent intent = new Intent();
                     intent.setClass(v.getContext(), ViewNewsActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putLong("newsId", news.getNewsId());

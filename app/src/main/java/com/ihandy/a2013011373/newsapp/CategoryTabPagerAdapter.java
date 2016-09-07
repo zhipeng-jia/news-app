@@ -5,10 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class CategoryTabPagerAdapter extends FragmentPagerAdapter {
     private Context context;
@@ -21,7 +18,7 @@ public class CategoryTabPagerAdapter extends FragmentPagerAdapter {
         if (remoteCategories != null) {
             Category.mergeWithRemote(remoteCategories);
         }
-        categories = Category.getAll();
+        categories = Category.getAllShown();
     }
 
     @Override

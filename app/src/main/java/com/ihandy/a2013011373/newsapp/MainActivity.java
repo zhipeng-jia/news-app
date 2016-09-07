@@ -1,5 +1,7 @@
 package com.ihandy.a2013011373.newsapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -14,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        final Context context = this;
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity
                 ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
                 viewPager.setAdapter(
                         new CategoryTabPagerAdapter(getSupportFragmentManager(),
-                                getApplicationContext(), categories));
+                                context, categories));
                 TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
                 tabLayout.setupWithViewPager(viewPager);
             }
@@ -84,11 +86,14 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_favorites) {
-            // Handle the camera action
+            Intent intent = new Intent();
+            intent.setClass(getApplicationContext(), ViewFavoritesActivity.class);
+            Bundle bundle = new Bundle();
+            intent.putExtras(bundle);
+            startActivity(intent);
         } else if (id == R.id.nav_category_management) {
 
         } else if (id == R.id.nav_about_me) {

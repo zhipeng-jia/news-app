@@ -50,6 +50,11 @@ public class Category extends Model {
         return new Select().from(Category.class).orderBy("Name ASC").execute();
     }
 
+    public static List<Category> getAllShown() {
+        return new Select().from(Category.class)
+                .where("Shown = ?", true).orderBy("Name ASC").execute();
+    }
+
     public static void mergeWithRemote(List<Category> remoteCategories) {
         List<Category> categories = getAll();
         for (Category category : categories) {

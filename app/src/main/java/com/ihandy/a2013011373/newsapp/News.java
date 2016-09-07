@@ -97,6 +97,11 @@ public class News extends Model implements Comparable<News> {
                 .where("Category = ?", category.getId()).orderBy("NewsId DESC").execute();
     }
 
+    public static List<News> getAllFavorites() {
+        return new Select().from(News.class)
+                .where("Favorite = ?", true).orderBy("NewsId DESC").execute();
+    }
+
     public static void insertAll(List<News> newsList) {
         ActiveAndroid.beginTransaction();
         try {
