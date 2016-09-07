@@ -54,6 +54,9 @@ public class CategoryPageFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
+        swipeRefreshLayout.setColorSchemeColors(
+                context.getResources().getColor(R.color.colorPrimary));
+
         layoutManager = new LinearLayoutManager(container.getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewAdapter = new NewsRecyclerViewAdapter(newsList, context);

@@ -1,9 +1,8 @@
 package com.ihandy.a2013011373.newsapp;
 
-import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -25,8 +24,8 @@ public class ViewNewsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Drawable icon = getResources().getDrawable(R.drawable.ic_favorite_white_24dp);
-        ColorStateList colorSelector = getResources().getColorStateList(R.color.colorFavorite);
-        DrawableCompat.setTintList(icon, colorSelector);
+        icon.mutate();
+        icon.setColorFilter(getResources().getColor(R.color.colorFavorite), PorterDuff.Mode.SRC_ATOP);
         modifiedFavoriteIcon = icon;
 
         Bundle bundle = getIntent().getExtras();

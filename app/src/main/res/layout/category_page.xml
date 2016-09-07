@@ -12,6 +12,6 @@
         android:fadingEdge="vertical"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
-        android:id="@+id/recycler_view"/>
+        android:id="@+id/recycler_view" />
 
 </android.support.v4.widget.SwipeRefreshLayout>
