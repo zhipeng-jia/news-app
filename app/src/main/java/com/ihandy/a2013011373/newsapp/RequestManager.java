@@ -61,7 +61,7 @@ public class RequestManager {
             for (int i = 0; i < target.length(); i++) {
                 JSONObject entry = target.getJSONObject(i);
                 News news = new News();
-                news.setId(entry.getLong("news_id"));
+                news.setNewsId(entry.getLong("news_id"));
                 news.setTitle(entry.getString("title"));
                 news.setCategory(category);
                 news.setOrigin(entry.getString("origin"));
@@ -69,8 +69,8 @@ public class RequestManager {
                     news.setUrl(entry.getJSONObject("source").getString("url"));
                 }
                 JSONArray images = entry.getJSONArray("imgs");
-                for (int j = 0; j < images.length(); j++) {
-                    news.addImageUrl(images.getJSONObject(j).getString("url"));
+                if (images.length() > 0) {
+                    news.setImageUrl(images.getJSONObject(0).getString("url"));
                 }
                 newsList.add(news);
             }

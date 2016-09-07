@@ -17,11 +17,11 @@ public class ViewNewsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
-        String url = bundle.getString("url");
+        News news = (News) bundle.getSerializable("news");
 
         WebView webView = (WebView) findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl(url);
+        webView.loadUrl(news.getUrl());
     }
 
     @Override

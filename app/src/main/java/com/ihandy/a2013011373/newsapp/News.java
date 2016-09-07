@@ -1,21 +1,44 @@
 package com.ihandy.a2013011373.newsapp;
 
-import java.util.ArrayList;
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
-public class News implements Comparable<News> {
-    private long id;
+import java.io.Serializable;
+import java.util.List;
+
+@Table(name = "News")
+public class News extends Model implements Serializable, Comparable<News> {
+    @Column(name = "NewsId", index = true, unique = true,
+            onUniqueConflict = Column.ConflictAction.IGNORE)
+    private long newsId;
+
+    @Column(name = "Title")
     private String title = "";
+
+    @Column(name = "Category")
     private Category category;
-    private ArrayList<String> imageUrls = new ArrayList<>();
+
+    @Column(name = "ImageUrl")
+    private String imageUrl = "";
+
+    @Column(name = "Origin")
     private String origin = "";
+
+    @Column(name = "Url")
     private String url = "";
 
-    public long getId() {
-        return id;
+    @Column(name = "Favorite")
+    private boolean favorite = false;
+
+    public long getNewsId() {
+        return newsId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setNewsId(long newsId) {
+        this.newsId = newsId;
     }
 
     public String getTitle() {
@@ -50,12 +73,37 @@ public class News implements Comparable<News> {
         this.url = url;
     }
 
-    public void addImageUrl(String url) {
-        imageUrls.add(url);
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public ArrayList<String> getImageUrls() {
-        return imageUrls;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public static List<News> getByCategory(Category category) {
+        return new Select().from(News.class)
+                .where("Category = ?", category.getId()).orderBy("NewsId DESC").execute();
+    }
+
+    public static void insertAll(List<News> newsList) {
+        ActiveAndroid.beginTransaction();
+        try {
+            for (News news : newsList) {
+                news.save();
+            }
+            ActiveAndroid.setTransactionSuccessful();
+        } finally {
+            ActiveAndroid.endTransaction();
+        }
     }
 
     @Override
@@ -65,20 +113,20 @@ public class News implements Comparable<News> {
 
         News news = (News) o;
 
-        return id == news.id;
+        return newsId == news.newsId;
 
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return (int) (newsId ^ (newsId >>> 32));
     }
 
     @Override
     public int compareTo(News another) {
-        if (id > another.id) {
+        if (newsId > another.newsId) {
             return -1;
-        } else if (id < another.id) {
+        } else if (newsId < another.newsId) {
             return 1;
         }
         return 0;

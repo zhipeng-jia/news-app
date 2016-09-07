@@ -12,15 +12,16 @@ import java.util.Map;
 
 public class CategoryTabPagerAdapter extends FragmentPagerAdapter {
     private Context context;
-    private List<Category> categories = new ArrayList<>();
+    private List<Category> categories;
 
     public CategoryTabPagerAdapter(FragmentManager fm,
                                    Context context, List<Category> remoteCategories) {
         super(fm);
         this.context = context;
         if (remoteCategories != null) {
-            categories = remoteCategories;
+            Category.mergeWithRemote(remoteCategories);
         }
+        categories = Category.getAll();
     }
 
     @Override

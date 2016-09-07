@@ -61,7 +61,7 @@ public class CategoryPageFragment extends Fragment {
 
         initSwipeRefreshLayout();
         initRecyclerView();
-        refreshNews();
+        refreshNews(true);
 
         return view;
     }
@@ -70,7 +70,7 @@ public class CategoryPageFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshNews();
+                refreshNews(false);
             }
         });
     }
@@ -92,18 +92,27 @@ public class CategoryPageFragment extends Fragment {
         });
     }
 
-    private void refreshNews() {
-        swipeRefreshLayout.setRefreshing(true);
+    private void refreshNews(final boolean initialLoad) {
+        if (!initialLoad) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
         new Handler().post(new Runnable() {
             @Override
             public void run() {
                 List<News> remoteNewsList = RequestManager.fetchNews(category, -1);
                 if (remoteNewsList != null) {
+                    News.insertAll(remoteNewsList);
                     newsList.clear();
                     newsList.addAll(remoteNewsList);
                     recyclerViewAdapter.notifyDataSetChanged();
+                } else if (initialLoad) {
+                    List<News> localNewsList = News.getByCategory(category);
+                    newsList.addAll(localNewsList);
+                    recyclerViewAdapter.notifyDataSetChanged();
                 }
-                swipeRefreshLayout.setRefreshing(false);
+                if (!initialLoad) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }
@@ -118,10 +127,11 @@ public class CategoryPageFragment extends Fragment {
             public void run() {
                 long lastNewsId = -1;
                 if (newsList.size() > 0) {
-                    lastNewsId = newsList.get(newsList.size() - 1).getId() - 1;
+                    lastNewsId = newsList.get(newsList.size() - 1).getNewsId() - 1;
                 }
                 List<News> remoteNewsList = RequestManager.fetchNews(category, lastNewsId);
                 if (remoteNewsList != null) {
+                    News.insertAll(remoteNewsList);
                     for (News news : remoteNewsList) {
                         newsList.add(news);
                         recyclerViewAdapter.notifyItemChanged(newsList.size() - 1);

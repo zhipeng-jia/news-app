@@ -1,10 +1,23 @@
 package com.ihandy.a2013011373.newsapp;
 
-import java.io.Serializable;
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
-public class Category implements Serializable {
-    private String name;
-    private String displayName;
+import java.io.Serializable;
+import java.util.List;
+
+@Table(name = "Categories")
+public class Category extends Model implements Serializable {
+    @Column(name = "Name", index = true, unique = true)
+    private String name = "";
+
+    @Column(name = "DisplayName")
+    private String displayName = "";
+
+    @Column(name = "Shown")
+    private boolean shown = true;
 
     public String getName() {
         return name;
@@ -20,6 +33,32 @@ public class Category implements Serializable {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public boolean isShown() {
+        return shown;
+    }
+
+    public void setShown(boolean shown) {
+        this.shown = shown;
+    }
+
+    public static List<Category> getAll() {
+        return new Select().from(Category.class).orderBy("Name ASC").execute();
+    }
+
+    public static void mergeWithRemote(List<Category> remoteCategories) {
+        List<Category> categories = getAll();
+        for (Category category : categories) {
+            if (!remoteCategories.contains(category)) {
+                category.delete();
+            }
+        }
+        for (Category category : remoteCategories) {
+            if (!categories.contains(category)) {
+                category.save();
+            }
+        }
     }
 
     @Override

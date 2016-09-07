@@ -48,7 +48,7 @@ public class NewsRecyclerViewAdapter
                     Intent intent= new Intent();
                     intent.setClass(v.getContext(), ViewNewsActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("url", news.getUrl());
+                    bundle.putSerializable("news", news);
                     intent.putExtras(bundle);
                     v.getContext().startActivity(intent);
                 }
@@ -84,8 +84,8 @@ public class NewsRecyclerViewAdapter
         holder.originTexView.setText(news.getOrigin());
         holder.imageUrl = null;
         holder.imageView.setImageBitmap(placeholder);
-        if (news.getImageUrls().size() > 0) {
-            String url = news.getImageUrls().get(0);
+        if (news.getImageUrl() != null && news.getImageUrl().length() > 0) {
+            String url = news.getImageUrl();
             holder.imageUrl = url;
             ImageManager imageManager = ImageManager.getInstance();
             if (imageManager.hasImage(url)) {
