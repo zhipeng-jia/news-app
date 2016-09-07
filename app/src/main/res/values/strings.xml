@@ -27,4 +27,10 @@
     <string name="category_unwatched">Unwatched</string>
 
     <string name="category_manage_title">Categories</string>
+
+    <string name="about_title">About</string>
+    <string name="about_name">Zhipeng Jia</string>
+    <string name="about_email">zhipeng.jia@outlook.com</string>
+    <string name="about_cell_phone">13021255491</string>
+    <string name="about_student_id">Student ID: 2013011373</string>
 </resources>
