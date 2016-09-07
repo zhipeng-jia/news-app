@@ -6,9 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ViewFavoritesActivity extends AppCompatActivity {
+    private List<News> newsList;
+
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private NewsRecyclerViewAdapter recyclerViewAdapter;
@@ -21,7 +25,7 @@ public class ViewFavoritesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        List<News> newsList = News.getAllFavorites();
+        newsList = News.getAllFavorites();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(this);
@@ -34,5 +38,27 @@ public class ViewFavoritesActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         finish();
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        removeNoLongerFavoriteNews();
+    }
+
+    private void removeNoLongerFavoriteNews() {
+        List<News> favoriteNews = News.getAllFavorites();
+        Set<Long> favoriteNewsIds = new HashSet<>();
+        for (News news : favoriteNews) {
+            favoriteNewsIds.add(news.getNewsId());
+        }
+        for (int i = 0; i < newsList.size(); ) {
+            if (!favoriteNewsIds.contains(newsList.get(i).getNewsId())) {
+                newsList.remove(i);
+                recyclerViewAdapter.notifyItemRemoved(i);
+            } else {
+                i++;
+            }
+        }
     }
 }
