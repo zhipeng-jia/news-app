@@ -122,7 +122,9 @@ public class NewsRecyclerViewAdapter
 
         protected void onPostExecute(Bitmap result) {
             ImageManager imageManager = ImageManager.getInstance();
-            imageManager.putImage(url, result);
+            if (result != null) {
+                imageManager.putImage(url, result);
+            }
             if (url.equals(holder.imageUrl) && result != null) {
                 holder.imageView.setImageBitmap(result);
             }
