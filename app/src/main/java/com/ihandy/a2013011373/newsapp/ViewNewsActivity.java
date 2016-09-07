@@ -1,5 +1,6 @@
 package com.ihandy.a2013011373.newsapp;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -56,6 +57,7 @@ public class ViewNewsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.share) {
+            shareNews();
             return true;
         }
 
@@ -71,5 +73,13 @@ public class ViewNewsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void shareNews() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, news.getTitle());
+        intent.putExtra(Intent.EXTRA_TEXT, news.getUrl());
+        startActivity(intent);
     }
 }
