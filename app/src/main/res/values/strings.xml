@@ -22,4 +22,9 @@
     <string name="news_menu_favorite">Favorite</string>
 
     <string name="favorites_title">Favorites</string>
+
+    <string name="category_watched">Watched</string>
+    <string name="category_unwatched">Unwatched</string>
+
+    <string name="category_manage_title">Categories</string>
 </resources>

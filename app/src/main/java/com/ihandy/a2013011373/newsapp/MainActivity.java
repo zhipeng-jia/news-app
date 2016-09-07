@@ -52,6 +52,40 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        rebuildCategoryTabIfNeeded();
+    }
+
+    private void rebuildCategoryTabIfNeeded() {
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        CategoryTabPagerAdapter adapter = (CategoryTabPagerAdapter) viewPager.getAdapter();
+        if (adapter == null) {
+            return;
+        }
+        List<Category> currentCategories = adapter.getCategories();
+        List<Category> watchedCategories = Category.getAllWatched();
+        boolean same = true;
+        if (currentCategories.size() != watchedCategories.size()) {
+            same = false;
+        } else {
+            for (Category category : currentCategories) {
+                if (!watchedCategories.contains(category)) {
+                    same = false;
+                    break;
+                }
+            }
+        }
+        if (!same) {
+            viewPager.setAdapter(new CategoryTabPagerAdapter(
+                    getSupportFragmentManager(), this, null));
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+            tabLayout.setupWithViewPager(viewPager);
+
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -91,11 +125,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_favorites) {
             Intent intent = new Intent();
             intent.setClass(getApplicationContext(), ViewFavoritesActivity.class);
-            Bundle bundle = new Bundle();
-            intent.putExtras(bundle);
             startActivity(intent);
         } else if (id == R.id.nav_category_management) {
-
+            Intent intent = new Intent();
+            intent.setClass(getApplicationContext(), CategoryManageActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_about_me) {
 
         }

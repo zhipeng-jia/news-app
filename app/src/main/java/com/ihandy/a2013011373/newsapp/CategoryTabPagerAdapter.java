@@ -18,7 +18,11 @@ public class CategoryTabPagerAdapter extends FragmentPagerAdapter {
         if (remoteCategories != null) {
             Category.mergeWithRemote(remoteCategories);
         }
-        categories = Category.getAllShown();
+        categories = Category.getAllWatched();
+    }
+
+    public List<Category> getCategories() {
+        return categories;
     }
 
     @Override

@@ -30,6 +30,9 @@
         <activity android:name=".ViewFavoritesActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/favorites_title"/>
+        <activity android:name=".CategoryManageActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/category_manage_title" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

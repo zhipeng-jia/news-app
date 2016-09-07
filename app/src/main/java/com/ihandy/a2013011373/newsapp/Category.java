@@ -8,15 +8,15 @@ import com.activeandroid.query.Select;
 import java.util.List;
 
 @Table(name = "Categories")
-public class Category extends Model {
+public class Category extends Model implements Comparable<Category> {
     @Column(name = "Name", index = true, unique = true)
     private String name = "";
 
     @Column(name = "DisplayName")
     private String displayName = "";
 
-    @Column(name = "Shown")
-    private boolean shown = true;
+    @Column(name = "Watched")
+    private boolean watched = true;
 
     public String getName() {
         return name;
@@ -34,12 +34,12 @@ public class Category extends Model {
         this.displayName = displayName;
     }
 
-    public boolean isShown() {
-        return shown;
+    public boolean isWatched() {
+        return watched;
     }
 
-    public void setShown(boolean shown) {
-        this.shown = shown;
+    public void setWatched(boolean watched) {
+        this.watched = watched;
     }
 
     public static Category getByName(String name) {
@@ -50,9 +50,9 @@ public class Category extends Model {
         return new Select().from(Category.class).orderBy("Name ASC").execute();
     }
 
-    public static List<Category> getAllShown() {
+    public static List<Category> getAllWatched() {
         return new Select().from(Category.class)
-                .where("Shown = ?", true).orderBy("Name ASC").execute();
+                .where("Watched = ?", true).orderBy("Name ASC").execute();
     }
 
     public static void mergeWithRemote(List<Category> remoteCategories) {
@@ -83,5 +83,10 @@ public class Category extends Model {
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
+    }
+
+    @Override
+    public int compareTo(Category another) {
+        return name.compareTo(another.name);
     }
 }

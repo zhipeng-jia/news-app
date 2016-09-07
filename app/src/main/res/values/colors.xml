@@ -5,4 +5,6 @@
     <color name="colorAccent">#E3F2FD</color>
 
     <color name="colorFavorite">#FF4081</color>
+    <color name="colorCategoryManageTitle">#FF5722</color>
+    <color name="colorCategoryManageButton">#1976D2</color>
 </resources>
