@@ -39,16 +39,16 @@ public class NewsRecyclerViewAdapter
                     News news = (News) v.getTag();
                     if (news.getUrl() == null || news.getUrl().equals("")) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                        builder.setTitle("Error");
-                        builder.setMessage("This news does not provide a link.");
-                        builder.setPositiveButton("OK", null);
+                        builder.setTitle(v.getResources().getString(R.string.dialog_error));
+                        builder.setMessage(v.getResources().getString(R.string.dialog_no_link));
+                        builder.setPositiveButton(v.getResources().getString(R.string.dialog_ok), null);
                         builder.show();
                         return;
                     }
                     Intent intent= new Intent();
                     intent.setClass(v.getContext(), ViewNewsActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("news", news);
+                    bundle.putLong("newsId", news.getNewsId());
                     intent.putExtras(bundle);
                     v.getContext().startActivity(intent);
                 }

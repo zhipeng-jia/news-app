@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryPageFragment extends Fragment {
-    private static final String ARG_CATEGORY = "ARG_CATEGORY";
+    private static final String ARG_CATEGORY_NAME = "ARG_CATEGORY_NAME";
 
     private Context context;
     private Category category;
@@ -30,7 +30,7 @@ public class CategoryPageFragment extends Fragment {
 
     public static CategoryPageFragment newInstance(Category category, Context context) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CATEGORY, category);
+        args.putString(ARG_CATEGORY_NAME, category.getName());
         CategoryPageFragment fragment = new CategoryPageFragment();
         fragment.setArguments(args);
         fragment.setContext(context);
@@ -44,7 +44,7 @@ public class CategoryPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        category = (Category) getArguments().getSerializable(ARG_CATEGORY);
+        category = Category.getByName(getArguments().getString(ARG_CATEGORY_NAME));
     }
 
     @Override

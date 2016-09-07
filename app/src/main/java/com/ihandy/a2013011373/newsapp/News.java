@@ -6,11 +6,10 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Table(name = "News")
-public class News extends Model implements Serializable, Comparable<News> {
+public class News extends Model implements Comparable<News> {
     @Column(name = "NewsId", index = true, unique = true,
             onUniqueConflict = Column.ConflictAction.IGNORE)
     private long newsId;
@@ -87,6 +86,10 @@ public class News extends Model implements Serializable, Comparable<News> {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public static News getByNewsId(long newsId) {
+        return new Select().from(News.class).where("NewsId = ?", newsId).executeSingle();
     }
 
     public static List<News> getByCategory(Category category) {

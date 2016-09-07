@@ -5,11 +5,10 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Table(name = "Categories")
-public class Category extends Model implements Serializable {
+public class Category extends Model {
     @Column(name = "Name", index = true, unique = true)
     private String name = "";
 
@@ -41,6 +40,10 @@ public class Category extends Model implements Serializable {
 
     public void setShown(boolean shown) {
         this.shown = shown;
+    }
+
+    public static Category getByName(String name) {
+        return new Select().from(Category.class).where("Name = ?", name).executeSingle();
     }
 
     public static List<Category> getAll() {
