@@ -105,10 +105,14 @@ public class CategoryPageFragment extends Fragment {
                     newsList.clear();
                     newsList.addAll(remoteNewsList);
                     recyclerViewAdapter.notifyDataSetChanged();
-                } else if (initialLoad) {
-                    List<News> localNewsList = News.getByCategory(category);
-                    newsList.addAll(localNewsList);
-                    recyclerViewAdapter.notifyDataSetChanged();
+                } else {
+                    if (initialLoad) {
+                        List<News> localNewsList = News.getByCategory(category);
+                        newsList.addAll(localNewsList);
+                        recyclerViewAdapter.notifyDataSetChanged();
+                    } else {
+                        Utils.showErrorDialog(context, R.string.dialog_fail_refresh, null);
+                    }
                 }
                 if (!initialLoad) {
                     swipeRefreshLayout.setRefreshing(false);
@@ -136,8 +140,15 @@ public class CategoryPageFragment extends Fragment {
                         newsList.add(news);
                         recyclerViewAdapter.notifyItemChanged(newsList.size() - 1);
                     }
+                    ongoingFetchMoreNews = false;
+                } else {
+                    Utils.showErrorDialog(context, R.string.dialog_fail_fetch_more, new Runnable() {
+                        @Override
+                        public void run() {
+                            ongoingFetchMoreNews = false;
+                        }
+                    });
                 }
-                ongoingFetchMoreNews = false;
             }
         });
     }

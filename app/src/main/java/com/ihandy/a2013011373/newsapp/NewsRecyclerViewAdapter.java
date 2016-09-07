@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -38,11 +37,7 @@ public class NewsRecyclerViewAdapter
                 public void onClick(View v) {
                     News news = (News) v.getTag();
                     if (news.getUrl() == null || news.getUrl().equals("")) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                        builder.setTitle(v.getResources().getString(R.string.dialog_error));
-                        builder.setMessage(v.getResources().getString(R.string.dialog_no_link));
-                        builder.setPositiveButton(v.getResources().getString(R.string.dialog_ok), null);
-                        builder.show();
+                        Utils.showErrorDialog(v.getContext(), R.string.dialog_no_link, null);
                         return;
                     }
                     Intent intent = new Intent();

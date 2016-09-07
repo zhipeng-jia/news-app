@@ -9,6 +9,8 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_error">Error</string>
     <string name="dialog_no_link">This news does not provide a link.</string>
+    <string name="dialog_fail_refresh">Failed to refresh news.</string>
+    <string name="dialog_fail_fetch_more">Failed to fetch more news.</string>
 
     <string name="nav_title">Java Course</string>
     <string name="nav_subtitle">Department of CST</string>
