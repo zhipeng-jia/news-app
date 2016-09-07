@@ -2,7 +2,7 @@ package com.ihandy.a2013011373.newsapp;
 
 import java.util.ArrayList;
 
-public class News {
+public class News implements Comparable<News> {
     private long id;
     private String title = "";
     private Category category;
@@ -72,5 +72,15 @@ public class News {
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
+    }
+
+    @Override
+    public int compareTo(News another) {
+        if (id > another.id) {
+            return -1;
+        } else if (id < another.id) {
+            return 1;
+        }
+        return 0;
     }
 }

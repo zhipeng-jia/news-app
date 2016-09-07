@@ -19,7 +19,8 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.util.List;
 
-public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
+public class NewsRecyclerViewAdapter
+        extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
     public static class NewsViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView titleTextView;

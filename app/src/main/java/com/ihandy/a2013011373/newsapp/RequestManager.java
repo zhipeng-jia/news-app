@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -73,6 +74,7 @@ public class RequestManager {
                 }
                 newsList.add(news);
             }
+            Collections.sort(newsList);
             return newsList;
         } catch (Exception e) {
             Log.w("RequestManager", e);
